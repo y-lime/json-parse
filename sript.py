@@ -4,6 +4,7 @@ from collections import defaultdict
 import sys
 import os
 
+# 値をハッシュ化して比較可能にする関数
 def make_hashable(val):
     if isinstance(val, (list, tuple)):
         return tuple(make_hashable(v) for v in val)
@@ -12,6 +13,7 @@ def make_hashable(val):
     else:
         return val
 
+# profileの全項目・階層と値を収集する関数
 def collect_profile_keys_and_values(data):
     profile_keys = set()
     profile_values = defaultdict(set)
@@ -32,18 +34,22 @@ def collect_profile_keys_and_values(data):
         collect_keys(user['profile'])
     return profile_keys, profile_values
 
+# ヘッダー行を書き込む関数
 def write_header(ws, start_row, start_col, ids):
     header = ["項目名", "設定値"] + ids
     for col, val in enumerate(header, start_col):
         ws.cell(row=start_row, column=col, value=val)
 
+# profile情報をExcelに書き込む関数
 def write_profile_rows(ws, start_row, start_col, profile_keys, profile_values, data, ids):
     prev_disp_name = None
     row_idx = start_row + 1
     for key_path, depth, key, is_dict in profile_keys:
+        # インデント付きの表示名を作成
         disp_name = '  ' * (depth-1) + key
         values = sorted(profile_values[key_path])
         if not values:
+            # 値が存在しない場合の行
             row_disp_name = disp_name if prev_disp_name != disp_name else ''
             row = [row_disp_name, ''] + ['' for _ in ids]
             for col, val in enumerate(row, start_col):
@@ -52,12 +58,14 @@ def write_profile_rows(ws, start_row, start_col, profile_keys, profile_values, d
             row_idx += 1
         else:
             for value in values:
+                # 値の表示用（リストやdictはstrで）
                 if isinstance(value, tuple) and any(isinstance(v, tuple) for v in value):
                     disp_value = str(value)
                 else:
                     disp_value = value if not isinstance(value, tuple) else str(value)
                 row_disp_name = disp_name if prev_disp_name != disp_name else ''
                 row = [row_disp_name, disp_value]
+                # 各ユーザーごとに値が一致するか判定
                 for user in data:
                     v = user['profile']
                     try:
@@ -75,10 +83,13 @@ def write_profile_rows(ws, start_row, start_col, profile_keys, profile_values, d
                 prev_disp_name = disp_name
                 row_idx += 1
 
+# JSONからExcelへの変換処理
 def json_to_excel(input_path, output_path, template_path):
     with open(input_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    # profileの項目・値を収集
     profile_keys, profile_values = collect_profile_keys_and_values(data)
+    # profile_keysを階層順・値→親dict→子dictの順で並べる
     profile_keys = sorted(profile_keys, key=lambda x: (x[1], x[3], x[0]))
     wb = load_workbook(template_path)
     ws = wb.active
@@ -89,6 +100,7 @@ def json_to_excel(input_path, output_path, template_path):
     write_profile_rows(ws, start_row, start_col, profile_keys, profile_values, data, ids)
     wb.save(output_path)
 
+# メイン処理
 def main():
     if len(sys.argv) < 2:
         print("Usage: python sript.py <input_json_file>")
