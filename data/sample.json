@@ -1,0 +1,35 @@
+[
+  {
+    "id": 1,
+    "name": "ユーザーA",
+    "profile": {
+      "age": 28,
+      "address": {
+        "city": "東京",
+        "zip": "100-0001"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "ユーザーB",
+    "profile": {
+      "age": 35,
+      "address": {
+        "city": "大阪",
+        "zip": "530-0001"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "ユーザーC",
+    "profile": {
+      "age": 22,
+      "address": {
+        "city": "名古屋",
+        "zip": "460-0001"
+      }
+    }
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "ユーザーA",
+    "profile": {
+      "hobbies": ["サッカー", "読書"],
+      "isActive": true
+    }
+  },
+  {
+    "id": 2,
+    "name": "ユーザーB",
+    "profile": {
+      "hobbies": ["映画鑑賞"],
+      "isActive": false
+    }
+  },
+  {
+    "id": 3,
+    "name": "ユーザーC",
+    "profile": {
+      "hobbies": ["料理", "旅行"],
+      "isActive": true
+    }
+  }
+]

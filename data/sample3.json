@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "ユーザーA",
+    "profile": {
+      "employment": {
+        "company": {
+          "name": "ABC株式会社",
+          "location": {
+            "city": "東京",
+            "zip": "100-0001"
+          }
+        },
+        "position": "エンジニア"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "ユーザーB",
+    "profile": {
+      "employment": {
+        "company": {
+          "name": "XYZ株式会社",
+          "location": {
+            "city": "大阪",
+            "zip": "530-0001"
+          }
+        },
+        "position": "デザイナー"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "ユーザーC",
+    "profile": {
+      "employment": {
+        "company": {
+          "name": "LMN株式会社",
+          "location": {
+            "city": "名古屋",
+            "zip": "460-0001"
+          }
+        },
+        "position": "マーケター"
+      }
+    }
+  }
+]
